@@ -1,11 +1,12 @@
-import { Link } from "gatsby";
+import { Link, useStaticQuery, graphql } from "gatsby";
 import React, { ReactNode } from "react";
 import { 
   container,
   heading,
   navLinks,
   navLinkItem,
-  navLinkText
+  navLinkText,
+  siteTitle
 } from "./layout.module.css"
 
 export interface LayoutProps {
@@ -15,12 +16,25 @@ export interface LayoutProps {
 
 export const Layout = (props: LayoutProps) => {
 
+  const data = useStaticQuery(graphql`
+  query {
+    site {
+      siteMetadata {
+        title
+        siteUrl
+      }
+    }
+  }
+  `)
+
   return (
     <div className={container}>
+      <header className={siteTitle}>{data.site.siteMetadata.title}</header>
       <nav>
         <ul className={navLinks}>
           <li className={navLinkItem}><Link className={navLinkText} to="/">Home</Link></li>
           <li className={navLinkItem}><Link className={navLinkText} to="/about">About</Link></li>
+          <li className={navLinkItem}><Link className={navLinkText} to="/blog">Blog</Link></li>
         </ul>
       </nav>
 
