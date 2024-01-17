@@ -3,19 +3,16 @@ import React from "react"
 import Seo from "../components/seo"
 import { graphql } from "gatsby"
 
-export interface AllFileData {
-  nodes: Array<{
-    name: string
-  }>
-}
-
-
-export interface BlogPageData {
-  allFile: AllFileData
+type BlogData = {
+  allFile: {
+    nodes: [{
+      name: string
+    }]
+  }
 }
 
 export interface BlogPageProps {
-  readonly data: BlogPageData;
+  readonly data: BlogData;
 }
 
 
