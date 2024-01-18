@@ -4,9 +4,14 @@ import Seo from "../components/seo"
 import { graphql } from "gatsby"
 
 type BlogData = {
-  allFile: {
+  allMdx: {
     nodes: [{
-      name: string
+      frontmatter: {
+        date: string,
+        title: string
+      }
+      id: string,
+      excerpt: string
     }]
   }
 }
@@ -20,26 +25,31 @@ const BlogPage = (props: BlogPageProps) => {
 
   return (
     <Layout pageTitle="My blog Post">
-      <ul>
-        {props.data.allFile.nodes.map((node) => {
+        {props.data.allMdx.nodes.map((node) => {
           return (
-            <li key={node.name}>
-              {node.name}
-            </li>
+            <article key={node.id}>
+              <h1>{node.frontmatter.title}</h1>
+              <p>Posted {node.frontmatter.date}</p>
+              <p>{node.excerpt}</p>
+            </article>
           )
         })}
-      </ul>
     </Layout>
   )
 }
 
 export const query = graphql`
 query {
-  allFile(filter: {sourceInstanceName: {eq: "blog"}}) {
+  allMdx(sort: {frontmatter: {date: DESC}}) {
     nodes {
-      name
+      frontmatter {
+        date(formatString: "MMMM D, YYYY")
+        title
+      }
+      id
+      excerpt
     }
-}
+  }
 }
 `
 

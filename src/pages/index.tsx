@@ -1,5 +1,5 @@
 import * as React from "react"
-import { HeadFC, Link, PageProps } from "gatsby"
+import { HeadFC, PageProps } from "gatsby"
 import { Layout } from "../components/layout"
 import { StaticImage } from "gatsby-plugin-image"
 import Seo from "../components/seo"
@@ -24,3 +24,6 @@ const IndexPage: React.FC<PageProps> = () => {
 export default IndexPage
 
 export const Head: HeadFC = () => <Seo title="Home Page" />
+/*
+part5
+*/
