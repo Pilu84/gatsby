@@ -1,17 +1,17 @@
-import { Layout } from "../components/layout"
+import { Layout } from "../../components/layout"
 import React from "react"
-import Seo from "../components/seo"
-import { graphql } from "gatsby"
+import Seo from "../../components/seo"
+import { graphql, Link } from "gatsby"
 
 type BlogData = {
   allMdx: {
     nodes: [{
       frontmatter: {
         date: string,
-        title: string
+        title: string,
+        slug: string
       }
-      id: string,
-      excerpt: string
+      id: string
     }]
   }
 }
@@ -28,9 +28,8 @@ const BlogPage = (props: BlogPageProps) => {
         {props.data.allMdx.nodes.map((node) => {
           return (
             <article key={node.id}>
-              <h1>{node.frontmatter.title}</h1>
+              <Link to={`/blog/${node.frontmatter.slug}`}><h1>{node.frontmatter.title}</h1></Link>
               <p>Posted {node.frontmatter.date}</p>
-              <p>{node.excerpt}</p>
             </article>
           )
         })}
@@ -45,9 +44,9 @@ query {
       frontmatter {
         date(formatString: "MMMM D, YYYY")
         title
+        slug
       }
       id
-      excerpt
     }
   }
 }
